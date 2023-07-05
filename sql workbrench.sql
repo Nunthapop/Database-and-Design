@@ -1,9 +1,18 @@
-select OrderID, OrderDate from orders
-where month(OrderDate)='11';
+select OrderID, OrderDate, CustomerID, CustomerName, ProductID, ProductName , Price, Quantity, sum(Price * Quantity) as TotalPrice
+from orders
+join customers using (CustomerID)
+join order_details using (OrderID)
+join products using (ProductID)
+where month(OrderDate)='11'
+group by OrderID
+order by OrderDate asc;
 
-select shipperID,ShipperName, OrderID, OrderDate from orders
-join shippers using (shipperID)
-where month(OrderDate)='11';
+
+select OrderID, OrderDate, CustomerID, CustomerName, ShipperID, ShipperName, Phone from orders
+join shippers using (ShipperID)
+join customers using (CustomerID)
+where month(OrderDate)='11'
+order by OrderDate asc;
 
 select EmployeeID, sum(price * Quantity) as total from employees 
 join orders using(EmployeeID) join order_details 
